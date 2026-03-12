@@ -1,0 +1,19 @@
+name: Jules Maintainer
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  notify-jules:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Core GitHub API
+        run: |
+          curl -X POST "${{ secrets.CORE_API_URL }}/api/webhooks" \
+          -H "Content-Type: application/json" \
+          -H "X-GitHub-Event: push" \
+          -d @$GITHUB_EVENT_PATH
+
+
+# This action initiated by core-github-api
